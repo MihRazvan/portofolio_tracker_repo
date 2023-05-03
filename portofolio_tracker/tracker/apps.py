@@ -1,6 +1,6 @@
-# myapp/apps.py
 from django.apps import AppConfig
 
-class MyAppConfig(AppConfig):
+
+class TrackerConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'myapp'
+    name = 'tracker'

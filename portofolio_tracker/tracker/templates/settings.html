@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<h1>Settings</h1>
+<form method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Currency Settings</legend>
+        <label for="currency">Currency:</label>
+        <select name="currency" id="currency">
+            <option value="USD" {% if currency=="USD" %}selected{% endif %}>USD</option>
+            <option value="EUR" {% if currency=="EUR" %}selected{% endif %}>EUR</option>
+            <option value="GBP" {% if currency=="GBP" %}selected{% endif %}>GBP</option>
+            <option value="JPY" {% if currency=="JPY" %}selected{% endif %}>JPY</option>
+        </select>
+    </fieldset>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

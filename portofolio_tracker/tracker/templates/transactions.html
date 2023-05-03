@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Transactions{% endblock %}
+
+{% block content %}
+<h1>Transactions</h1>
+<form id="transaction-form" action="" method="post">
+    {% csrf_token %}
+    <label for="crypto-select">Select cryptocurrency:</label>
+    <select name="crypto" id="crypto-select">
+        {% for symbol, name in cryptos %}
+        <option value="{{ symbol }}">{{ name }} ({{ symbol }})</option>
+        {% endfor %}
+    </select>
+    <label for="amount-input">Amount:</label>
+    <input type="number" name="amount" id="amount-input" step="any">
+    <button type="submit">Add Transaction</button>
+</form>
+<table id="transactions-table">
+    <thead>
+        <tr>
+            <th>Cryptocurrency</th>
+            <th>Amount</th>
+            <th>Value in USD</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+            <td>{{ transaction.crypto }}</td>
+            <td>{{ transaction.amount }}</td>
+            <td>{{ transaction.usd_value|floatformat:2 }}</td>
+            <td>
+                <form class="delete-transaction-form" action="{% url 'delete_transaction' transaction.id %}"
+                    method="post">
+                    {% csrf_token %}
+                    <button type="submit"><i class="fas fa-trash-alt"></i></button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No transactions found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p id="total-value">Total value in USD: {{ total_value|floatformat:2 }}</p>
+{% endblock %}
